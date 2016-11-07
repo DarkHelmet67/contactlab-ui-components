@@ -62,7 +62,9 @@ var TabsClab = function () {
 		value: function _activateThis(evt) {
 			evt ? evt.preventDefault() : null;
 			this.active = parseInt(evt.currentTarget.parentNode.getAttribute('data-index'));
-			this.fire('change', { 'active': this.active });
+			this.fire('change', {
+				'active': this.active
+			});
 		}
 
 		/*----------
@@ -75,8 +77,6 @@ var TabsClab = function () {
 			var _this = this;
 
 			if (active != undefined) {
-				this.set('current', this.labels[active]);
-
 				if (content != undefined && content.length > 0) {
 					while (Polymer.dom(this.$.activeContentWrapper).firstChild) {
 						Polymer.dom(this.$.activeContentWrapper).removeChild(Polymer.dom(this.$.activeContentWrapper).firstChild);
@@ -110,7 +110,10 @@ var TabsClab = function () {
 		key: '_computeActive',
 		value: function _computeActive(active, index) {
 			var arr = ['tab'];
-			active === index ? arr.push('active') : arr;
+			if (active === index) {
+				arr.push('active');
+				this.set('current', this.labels[active]);
+			};
 			return arr.join(' ');
 		}
 	}]);

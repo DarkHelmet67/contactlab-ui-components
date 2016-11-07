@@ -1,6 +1,6 @@
-class TabsClab{
+class TabsClab {
 
-	beforeRegister(){
+	beforeRegister() {
 		this.is = 'tabs-clab';
 		this.properties = {
 			labels: {
@@ -28,18 +28,18 @@ class TabsClab{
 				value: 0,
 				notify: true
 			},
-			current:{
-				type:String,
-				notify:true
+			current: {
+				type: String,
+				notify: true
 			},
-			_content:Array
+			_content: Array
 		};
-		this.observers=[
+		this.observers = [
 			'_changeTab(active, _content)'
 		]
 	}
 
-	attached(){
+	attached() {
 		this._content = this.getEffectiveChildren();
 	}
 
@@ -48,10 +48,12 @@ class TabsClab{
 	/*----------
 	EVENT HANDLERS
 	----------*/
-	_activateThis(evt){
+	_activateThis(evt) {
 		evt ? evt.preventDefault() : null;
 		this.active = parseInt(evt.currentTarget.parentNode.getAttribute('data-index'));
-		this.fire('change', {'active':this.active});
+		this.fire('change', {
+			'active': this.active
+		});
 	}
 
 
@@ -60,16 +62,14 @@ class TabsClab{
 	/*----------
 	OBSERVERS
 	----------*/
-	_changeTab(active, content){
-		if(active!=undefined){
-			this.set('current', this.labels[active]);
-
-			if(content!=undefined && content.length>0){
-				while(Polymer.dom(this.$.activeContentWrapper).firstChild){
+	_changeTab(active, content) {
+		if (active != undefined) {
+			if (content != undefined && content.length > 0) {
+				while (Polymer.dom(this.$.activeContentWrapper).firstChild) {
 					Polymer.dom(this.$.activeContentWrapper).removeChild(Polymer.dom(this.$.activeContentWrapper).firstChild);
 				}
-				Array.prototype.map.call(this._content, (node, i)=>{
-					if(i==active){
+				Array.prototype.map.call(this._content, (node, i) => {
+					if (i == active) {
 						Polymer.dom(this.$.activeContentWrapper).appendChild(node);
 						Polymer.dom.flush();
 						return;
@@ -84,18 +84,21 @@ class TabsClab{
 	/*----------
 	COMPUTED
 	----------*/
-	_computeType(pills, vertical, centered, fullWidth){
+	_computeType(pills, vertical, centered, fullWidth) {
 		let arr = [];
 		pills ? arr.push('pills') : arr.push('tabs');
-		if(vertical) arr.push('vertical');
-		if(centered) arr.push('centered');
-		if(fullWidth) arr.push('full-width');
+		if (vertical) arr.push('vertical');
+		if (centered) arr.push('centered');
+		if (fullWidth) arr.push('full-width');
 		return arr.join(' ');
 	}
 
-	_computeActive(active,index){
+	_computeActive(active, index) {
 		let arr = ['tab'];
-		(active === index) ? arr.push('active') : arr;
+		if (active === index) {
+			arr.push('active');
+			this.set('current', this.labels[active]);
+		};
 		return arr.join(' ');
 	}
 
