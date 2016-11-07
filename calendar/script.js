@@ -1,6 +1,6 @@
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -48,6 +48,11 @@ var CalendarClab = function () {
 				_this.inline ? _this._createInstance('div.inline-cal') : _this._createInstance("input");
 			}, 50);
 		}
+	}, {
+		key: "detached",
+		value: function detached() {
+			this.getRomeIstance().destroy();
+		}
 
 		/*----------
   EVENT HANDLERS
@@ -58,7 +63,10 @@ var CalendarClab = function () {
 		value: function _checkClear(evt) {
 			if (evt.target.value == "") {
 				this.clear();
-				this.fire('datechange', { date: undefined, dateISO: undefined });
+				this.fire('datechange', {
+					date: undefined,
+					dateISO: undefined
+				});
 			}
 		}
 	}, {
@@ -85,7 +93,10 @@ var CalendarClab = function () {
 		key: "_changeDate",
 		value: function _changeDate(evt) {
 			this.valueStr = evt;
-			this.fire('datechange', { date: evt, dateISO: moment(new Date(evt)).format() });
+			this.fire('datechange', {
+				date: evt,
+				dateISO: moment(new Date(evt)).format()
+			});
 		}
 
 		/*----------
