@@ -38,7 +38,7 @@ class CalendarClab {
 	}
 
 	detached() {
-		this.getRomeIstance().destroy()
+		this.getRomeInstance().destroy()
 	}
 
 
