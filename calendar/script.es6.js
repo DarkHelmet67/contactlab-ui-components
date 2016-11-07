@@ -38,7 +38,8 @@ class CalendarClab {
 	}
 
 	detached() {
-		rome.find(this.querySelector('input')).destroy();
+		let calendar = rome.find(this.querySelector('input'))
+		calendar ? calendar.destroy() : null;
 	}
 
 
