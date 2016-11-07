@@ -51,7 +51,7 @@ var CalendarClab = function () {
 	}, {
 		key: "detached",
 		value: function detached() {
-			this.getRomeInstance().destroy();
+			rome.find(this.querySelector('input'));
 		}
 
 		/*----------
