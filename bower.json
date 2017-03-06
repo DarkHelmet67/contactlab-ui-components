@@ -5,7 +5,7 @@
   "dependencies": {
     "es6-promise": "^4.0.5",
     "fetch": "^2.0.1",
-    "polymer": "^1.7.1",
+    "polymer": "2.0-preview",
     "web-animations-js": "^2.2.2",
     "ikonograph": "^1.0.0"
   },

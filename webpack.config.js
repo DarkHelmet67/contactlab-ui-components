@@ -9,7 +9,7 @@ module.exports = {
   },
   devtool: 'source-map',
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
+    // new webpack.optimize.OccurenceOrderPlugin(),
     new WebpackNotifierPlugin({
 			title: 'UI Components',
 			alwaysNotify: true
@@ -27,5 +27,8 @@ module.exports = {
   },
   devServer: {
     contentBase: './../'
+  },
+  resolve: {
+    mainFields: ['browserify', 'browser', 'module', 'main']
   }
 }
