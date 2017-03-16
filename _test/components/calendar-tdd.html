@@ -4,10 +4,10 @@
 	<meta charset="UTF-8">
 
 
-	<script src="./../../../webcomponentsjs/webcomponents-lite.js"></script>
-	<script src="./../node_modules/web-component-tester/browser.js"></script>
+	<script src="./../../../../webcomponentsjs/webcomponents-lite.js"></script>
+	<script src="./../../node_modules/web-component-tester/browser.js"></script>
 
-	<link rel="import" href="./../../../polymer/polymer.html">
+	<link rel="import" href="./../../../../polymer/polymer.html">
 	<link rel="import" href="./../../calendar/view.html">
 	<script src="./../../_components/bundle.js"></script>
 
@@ -41,6 +41,7 @@ suite('<calendar-clab>', function() {
 			assert.isUndefined(calendar.placeholder);
 			assert.isUndefined(calendar.type);
 			assert.isUndefined(calendar.noteType);
+			assert.isUndefined(calendar.options.locale);
 
 	  });
 
@@ -156,6 +157,19 @@ suite('<calendar-clab>', function() {
         assert.equal(el.value, '');
         done();
       });
+	  });
+
+  	test('Check calendar.options.locale and _getLocale())', function() {
+      var locale = 'it';
+      calendar.options.locale = locale;
+      assert.equal(calendar.options.locale, calendar._getLocale());
+	  });
+
+  	test('Check setLocale() and getLocale())', function() {
+      var locale = 'it';
+      calendar.options.locale = locale;
+      calendar.setLocale();
+      assert.equal(calendar.getLocale(), locale);
 	  });
 
   });
