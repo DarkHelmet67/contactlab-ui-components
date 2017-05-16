@@ -90,6 +90,9 @@ export class AutoCompleteClab {
         observer: '_setLabelSize'
       },
       icon: String,
+      dropdown: {
+        type: Boolean
+      },
 
 
       /*----------
@@ -97,6 +100,7 @@ export class AutoCompleteClab {
       ----------*/
       _inputString: {
         type: String,
+        value: '',
         readonly: true
       },
       _currentHint: Object,
@@ -138,24 +142,35 @@ export class AutoCompleteClab {
 
     // If typing
     if(this._inputString.length > this.minChar) {
-      this.dispatchEvent(new CustomEvent('typing'), {bubbles: true});
-      if(typeof this._interval == 'number') {
-        window.clearTimeout(this._interval);
-        this._interval = undefined;
-      }
-
-      if(this.url != undefined) {
-        this._interval = window.setTimeout(() => {
-          this._fetchOptions();
-        }, 400);
-
-      } else {
-        this._showHints(true);
-      }
-
+      this._handleTyping(evt);
     } else {
       this.querySelector('curtain-clab').open = false;
     }
+  }
+
+  _handleTyping(evt) {
+    console.log('AUTOCOMPLETE._handleTyping', evt);
+    this.dispatchEvent(new CustomEvent('typing'), {bubbles: true});
+
+    if(typeof this._interval == 'number') {
+      window.clearTimeout(this._interval);
+      this._interval = undefined;
+    }
+
+    if(this.url != undefined) {
+      this._interval = window.setTimeout(() => {
+        this._fetchOptions();
+      }, 400);
+    } else {
+      this._showHints(true);
+    }
+  }
+
+  _handleMouseClick(evt) {
+    console.log('AUTOCOMPLETE._handleMouseClick', this.dropdown, evt);
+    if(!this.dropdown)
+      return false;
+    this._handleTyping(evt);
   }
 
   _handleHighlight(evt) {
@@ -270,6 +285,13 @@ export class AutoCompleteClab {
     promise().then((resp) => {
       this.set('options', resp);
     });
+  }
+
+  _setClass(dropdown) {
+    debugger;
+    console.log('_setClass', this.dropdown);
+    this.set('dropdown', this.dropdown);
+    return this.dropdown ? 'input-wrapper arrow-down' : 'input-wrapper';
   }
 
   _changedSelected(val, old) {
